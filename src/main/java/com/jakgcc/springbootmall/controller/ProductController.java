@@ -31,4 +31,15 @@ public class ProductController {
         Product product = productService.getProductById(productId);
         return  ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
+
+    @PutMapping("/updateProduct/{productId}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Integer productId,@RequestBody @Valid ProductRequest productRequest) throws IOException {
+        Product product = productService.getProductById(productId);
+        if(null==product){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        productService.updateProduct(productId,productRequest);
+        Product updateProduct = productService.getProductById(productId);
+        return  ResponseEntity.status(HttpStatus.OK).body(updateProduct);
+    }
 }

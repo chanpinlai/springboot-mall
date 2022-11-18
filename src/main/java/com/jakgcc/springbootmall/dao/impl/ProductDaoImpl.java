@@ -60,6 +60,23 @@ public class ProductDaoImpl implements ProductDao {
         return productId;
     }
 
+    @Override
+    public void updateProduct(Integer productId,ProductRequest productRequest) throws IOException {
+        String sql = readFile("sql/updateProduct.sql");
+        Map<String,Object> map = new HashMap<>();
+        map.put("productId",productId);
+        map.put("productName",productRequest.getProductName());
+        map.put("category",productRequest.getCategory().toString());
+        map.put("imageUrl",productRequest.getImageUrl());
+        map.put("price",productRequest.getPrice());
+        map.put("stock",productRequest.getStock());
+        map.put("description",productRequest.getDescription());
+        Date now  = new Date();
+        map.put("lastModifiedDate",now);
+        namedParameterJdbcTemplate.update(sql,map);
+
+    }
+
     //讀resources
     private String readFile(String relFilePath) throws IOException {
         final URL url = Resources.getResource(relFilePath);

@@ -9,4 +9,6 @@ public interface ProductService {
     public Product getProductById(Integer productId) throws IOException;
 
     public Integer createProduct(ProductRequest productRequest) throws IOException;
+
+    void updateProduct(Integer productId,ProductRequest productRequest) throws IOException;
 }
