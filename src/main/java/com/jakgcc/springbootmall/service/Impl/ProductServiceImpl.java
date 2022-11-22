@@ -27,4 +27,9 @@ public class ProductServiceImpl implements ProductService {
     public void updateProduct(Integer productId, ProductRequest productRequest) throws IOException {
         productDao.updateProduct(productId,productRequest);
     }
+
+    @Override
+    public void deleteProductById(Integer productId) throws IOException {
+        productDao.deleteProductId(productId);
+    }
 }

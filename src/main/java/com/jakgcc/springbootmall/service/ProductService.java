@@ -11,4 +11,6 @@ public interface ProductService {
     public Integer createProduct(ProductRequest productRequest) throws IOException;
 
     void updateProduct(Integer productId,ProductRequest productRequest) throws IOException;
+
+    void deleteProductById(Integer productId) throws IOException;
 }

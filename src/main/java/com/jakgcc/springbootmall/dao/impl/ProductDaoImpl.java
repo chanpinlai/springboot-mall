@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import com.google.common.io.Resources;
+
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -27,14 +28,14 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Product getProductById(Integer productId) throws IOException {
         String sql = readFile("sql/getProductById.sql");
-        Map<String,Object> map = new HashMap<>();
-        map.put("productId",productId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("productId", productId);
 
-        List<Product> productList = namedParameterJdbcTemplate.query(sql,map,new ProductRowMapper());
+        List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
 
-        if(productList.size()>0){
+        if (productList.size() > 0) {
             return productList.get(0);
-        }else{
+        } else {
             return null;
         }
     }
@@ -42,41 +43,51 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Integer createProduct(ProductRequest productRequest) throws IOException {
         String sql = readFile("sql/createProduct.sql");
-        Map<String,Object> map = new HashMap<>();
-        map.put("productName",productRequest.getProductName());
-        map.put("category",productRequest.getCategory().toString());
-        map.put("imageUrl",productRequest.getImageUrl());
-        map.put("price",productRequest.getPrice());
-        map.put("stock",productRequest.getStock());
-        map.put("description",productRequest.getDescription());
-        Date now  = new Date();
-        map.put("createDate",now);
-        map.put("lastModifiedDate",now);
+        Map<String, Object> map = new HashMap<>();
+        map.put("productName", productRequest.getProductName());
+        map.put("category", productRequest.getCategory().toString());
+        map.put("imageUrl", productRequest.getImageUrl());
+        map.put("price", productRequest.getPrice());
+        map.put("stock", productRequest.getStock());
+        map.put("description", productRequest.getDescription());
+        Date now = new Date();
+        map.put("createDate", now);
+        map.put("lastModifiedDate", now);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        namedParameterJdbcTemplate.update(sql,new MapSqlParameterSource(map),keyHolder);
+        namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(map), keyHolder);
 
         int productId = keyHolder.getKey().intValue();
         return productId;
     }
 
     @Override
-    public void updateProduct(Integer productId,ProductRequest productRequest) throws IOException {
+    public void updateProduct(Integer productId, ProductRequest productRequest) throws IOException {
         String sql = readFile("sql/updateProduct.sql");
-        Map<String,Object> map = new HashMap<>();
-        map.put("productId",productId);
-        map.put("productName",productRequest.getProductName());
-        map.put("category",productRequest.getCategory().toString());
-        map.put("imageUrl",productRequest.getImageUrl());
-        map.put("price",productRequest.getPrice());
-        map.put("stock",productRequest.getStock());
-        map.put("description",productRequest.getDescription());
-        Date now  = new Date();
-        map.put("lastModifiedDate",now);
-        namedParameterJdbcTemplate.update(sql,map);
+        Map<String, Object> map = new HashMap<>();
+        map.put("productId", productId);
+        map.put("productName", productRequest.getProductName());
+        map.put("category", productRequest.getCategory().toString());
+        map.put("imageUrl", productRequest.getImageUrl());
+        map.put("price", productRequest.getPrice());
+        map.put("stock", productRequest.getStock());
+        map.put("description", productRequest.getDescription());
+        Date now = new Date();
+        map.put("lastModifiedDate", now);
+        namedParameterJdbcTemplate.update(sql, map);
 
     }
 
+    @Override
+    public void deleteProductId(Integer productId) throws IOException {
+        String sql = readFile("sql/deleteProductId.sql");
+        Map<String, Object> map = new HashMap<>();
+        map.put("productId", productId);
+        namedParameterJdbcTemplate.update(sql, map);
+
+    }
+
+    //
     //讀resources
     private String readFile(String relFilePath) throws IOException {
         final URL url = Resources.getResource(relFilePath);

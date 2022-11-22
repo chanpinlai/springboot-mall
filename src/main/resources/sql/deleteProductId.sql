@@ -1,0 +1,1 @@
+DELETE FROM mall.product WHERE product_id=:productId

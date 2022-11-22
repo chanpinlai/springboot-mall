@@ -42,4 +42,10 @@ public class ProductController {
         Product updateProduct = productService.getProductById(productId);
         return  ResponseEntity.status(HttpStatus.OK).body(updateProduct);
     }
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<?> deleteProductById(@PathVariable Integer productId) throws IOException {
+        productService.deleteProductById(productId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
 }
