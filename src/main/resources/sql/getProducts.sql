@@ -8,4 +8,3 @@ SELECT product_id,
        created_date,
        last_modified_date
 FROM mall.product
-WHERE product_id = :productId

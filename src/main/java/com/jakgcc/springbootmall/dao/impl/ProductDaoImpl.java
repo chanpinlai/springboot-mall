@@ -63,7 +63,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void updateProduct(Integer productId, ProductRequest productRequest) throws IOException {
-        String sql = readFile("sql/updateProduct.sql");
+        String sql = readFile("sql/updateProductById.sql");
         Map<String, Object> map = new HashMap<>();
         map.put("productId", productId);
         map.put("productName", productRequest.getProductName());
@@ -85,6 +85,14 @@ public class ProductDaoImpl implements ProductDao {
         map.put("productId", productId);
         namedParameterJdbcTemplate.update(sql, map);
 
+    }
+
+    @Override
+    public List<Product> getProducts() throws IOException {
+        String sql = readFile("sql/getProducts.sql");
+        Map<String,Object> map = new HashMap<>();
+        List<Product> productList = namedParameterJdbcTemplate.query(sql,map,new ProductRowMapper());
+        return productList;
     }
 
     //
