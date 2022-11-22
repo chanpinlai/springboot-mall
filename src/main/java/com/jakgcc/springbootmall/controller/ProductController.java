@@ -2,6 +2,7 @@ package com.jakgcc.springbootmall.controller;
 
 import com.jakgcc.springbootmall.constant.ProductCategory;
 import com.jakgcc.springbootmall.dto.ProductRequest;
+import com.jakgcc.springbootmall.dto.ProductRequestParams;
 import com.jakgcc.springbootmall.model.Product;
 import com.jakgcc.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,18 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping("/getProducts")
-    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) ProductCategory category,
-                                                     @RequestParam(required = false) String search) throws IOException {
-        List<Product> productList = productService.getProducts(category,search);
+    public ResponseEntity<List<Product>> getProducts(
+            @RequestParam(required = false) ProductCategory category,
+            @RequestParam(required = false) String search,
+            @RequestParam(defaultValue = "created_date") String orderBy,
+            @RequestParam(defaultValue = "desc") String sort) throws IOException {
+        ProductRequestParams productRequestParams = new ProductRequestParams();
+        productRequestParams.setProductCategory(category);
+        productRequestParams.setSearch(search);
+        productRequestParams.setOrderBy(orderBy);
+        productRequestParams.setSort(sort);
+
+        List<Product> productList = productService.getProducts(productRequestParams);
         return ResponseEntity.status(HttpStatus.OK).body(productList);
 
 

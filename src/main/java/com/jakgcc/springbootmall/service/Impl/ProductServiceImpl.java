@@ -3,6 +3,7 @@ package com.jakgcc.springbootmall.service.Impl;
 import com.jakgcc.springbootmall.constant.ProductCategory;
 import com.jakgcc.springbootmall.dao.ProductDao;
 import com.jakgcc.springbootmall.dto.ProductRequest;
+import com.jakgcc.springbootmall.dto.ProductRequestParams;
 import com.jakgcc.springbootmall.model.Product;
 import com.jakgcc.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) throws IOException {
-        return productDao.getProducts(category,search);
+    public List<Product> getProducts(ProductRequestParams productRequestParams) throws IOException {
+        return productDao.getProducts(productRequestParams);
     }
 }

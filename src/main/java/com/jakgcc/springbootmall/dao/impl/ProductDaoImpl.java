@@ -3,6 +3,7 @@ package com.jakgcc.springbootmall.dao.impl;
 import com.jakgcc.springbootmall.constant.ProductCategory;
 import com.jakgcc.springbootmall.dao.ProductDao;
 import com.jakgcc.springbootmall.dto.ProductRequest;
+import com.jakgcc.springbootmall.dto.ProductRequestParams;
 import com.jakgcc.springbootmall.model.Product;
 import com.jakgcc.springbootmall.rowmapper.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,19 +90,21 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) throws IOException {
+    public List<Product> getProducts(ProductRequestParams productRequestParams) throws IOException {
         String sql = readFile("sql/getProducts.sql");
-        Map<String,Object> map = new HashMap<>();
-        if(null != category){
-            sql+=" AND category=:category ";
-            map.put("category",category.name());
+        Map<String, Object> map = new HashMap<>();
+        if (null != productRequestParams.getProductCategory().name()) {
+            sql += " AND category=:category ";
+            map.put("category", productRequestParams.getProductCategory().name());
         }
-        if(null!=search){
-            sql+=" AND product_name LIKE :product_name";
-            map.put("product_name","%"+search+"%");
+        if (null != productRequestParams.getSearch()) {
+            sql += " AND product_name LIKE :search";
+            map.put("search", "%" + productRequestParams.getSearch() + "%");
         }
+        //ORDER BY 用字串併接
+        sql += " ORDER BY " + productRequestParams.getOrderBy() + " " + productRequestParams.getSort();
 
-        List<Product> productList = namedParameterJdbcTemplate.query(sql,map,new ProductRowMapper());
+        List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
         return productList;
     }
 
