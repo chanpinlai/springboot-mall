@@ -1,5 +1,6 @@
 package com.jakgcc.springbootmall.dao.impl;
 
+import com.jakgcc.springbootmall.constant.ProductCategory;
 import com.jakgcc.springbootmall.dao.ProductDao;
 import com.jakgcc.springbootmall.dto.ProductRequest;
 import com.jakgcc.springbootmall.model.Product;
@@ -88,9 +89,18 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> getProducts() throws IOException {
+    public List<Product> getProducts(ProductCategory category, String search) throws IOException {
         String sql = readFile("sql/getProducts.sql");
         Map<String,Object> map = new HashMap<>();
+        if(null != category){
+            sql+=" AND category=:category ";
+            map.put("category",category.name());
+        }
+        if(null!=search){
+            sql+=" AND product_name LIKE :product_name";
+            map.put("product_name","%"+search+"%");
+        }
+
         List<Product> productList = namedParameterJdbcTemplate.query(sql,map,new ProductRowMapper());
         return productList;
     }

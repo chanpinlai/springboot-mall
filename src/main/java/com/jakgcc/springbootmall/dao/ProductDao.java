@@ -1,5 +1,6 @@
 package com.jakgcc.springbootmall.dao;
 
+import com.jakgcc.springbootmall.constant.ProductCategory;
 import com.jakgcc.springbootmall.dto.ProductRequest;
 import com.jakgcc.springbootmall.model.Product;
 
@@ -14,5 +15,5 @@ public interface ProductDao {
 
     void deleteProductId(Integer productId) throws IOException;
 
-    List<Product> getProducts() throws IOException;
+    List<Product> getProducts(ProductCategory category, String search) throws IOException;
 }

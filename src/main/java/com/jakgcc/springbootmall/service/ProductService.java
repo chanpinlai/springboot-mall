@@ -1,5 +1,6 @@
 package com.jakgcc.springbootmall.service;
 
+import com.jakgcc.springbootmall.constant.ProductCategory;
 import com.jakgcc.springbootmall.dto.ProductRequest;
 import com.jakgcc.springbootmall.model.Product;
 
@@ -15,5 +16,5 @@ public interface ProductService {
 
     void deleteProductById(Integer productId) throws IOException;
 
-    List<Product> getProducts() throws IOException;
+    List<Product> getProducts(ProductCategory category,String search) throws IOException;
 }

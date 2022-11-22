@@ -1,5 +1,6 @@
 package com.jakgcc.springbootmall.controller;
 
+import com.jakgcc.springbootmall.constant.ProductCategory;
 import com.jakgcc.springbootmall.dto.ProductRequest;
 import com.jakgcc.springbootmall.model.Product;
 import com.jakgcc.springbootmall.service.ProductService;
@@ -17,40 +18,44 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductService productService;
+
     @GetMapping("/getProducts")
-    public ResponseEntity<List<Product>> getProducts() throws IOException {
-        List<Product> productList = productService.getProducts();
+    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) ProductCategory category,
+                                                     @RequestParam(required = false) String search) throws IOException {
+        List<Product> productList = productService.getProducts(category,search);
         return ResponseEntity.status(HttpStatus.OK).body(productList);
 
 
-
     }
+
     @GetMapping("/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer productId) throws IOException {
         Product product = productService.getProductById(productId);
-        if(null==product){
+        if (null == product) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }else{
+        } else {
             return ResponseEntity.status(HttpStatus.OK).body(product);
         }
     }
+
     @PostMapping()
     public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequest) throws IOException {
         Integer productId = productService.createProduct(productRequest);
         Product product = productService.getProductById(productId);
-        return  ResponseEntity.status(HttpStatus.CREATED).body(product);
+        return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
     @PutMapping("/{productId}")
     public ResponseEntity<Product> updateProductById(@PathVariable Integer productId, @RequestBody @Valid ProductRequest productRequest) throws IOException {
         Product product = productService.getProductById(productId);
-        if(null==product){
+        if (null == product) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        productService.updateProductById(productId,productRequest);
+        productService.updateProductById(productId, productRequest);
         Product updateProduct = productService.getProductById(productId);
-        return  ResponseEntity.status(HttpStatus.OK).body(updateProduct);
+        return ResponseEntity.status(HttpStatus.OK).body(updateProduct);
     }
+
     @DeleteMapping("/{productId}")
     public ResponseEntity<?> deleteProductById(@PathVariable Integer productId) throws IOException {
         productService.deleteProductById(productId);

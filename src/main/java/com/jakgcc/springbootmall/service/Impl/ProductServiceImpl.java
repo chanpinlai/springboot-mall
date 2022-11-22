@@ -1,5 +1,6 @@
 package com.jakgcc.springbootmall.service.Impl;
 
+import com.jakgcc.springbootmall.constant.ProductCategory;
 import com.jakgcc.springbootmall.dao.ProductDao;
 import com.jakgcc.springbootmall.dto.ProductRequest;
 import com.jakgcc.springbootmall.model.Product;
@@ -35,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts() throws IOException {
-        return productDao.getProducts();
+    public List<Product> getProducts(ProductCategory category, String search) throws IOException {
+        return productDao.getProducts(category,search);
     }
 }
