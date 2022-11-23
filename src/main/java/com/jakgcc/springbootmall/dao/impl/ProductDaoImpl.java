@@ -1,6 +1,6 @@
 package com.jakgcc.springbootmall.dao.impl;
 
-import com.jakgcc.springbootmall.constant.ProductCategory;
+import com.google.common.io.Resources;
 import com.jakgcc.springbootmall.dao.ProductDao;
 import com.jakgcc.springbootmall.dto.ProductRequest;
 import com.jakgcc.springbootmall.dto.ProductRequestParams;
@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
-import com.google.common.io.Resources;
 
 import java.io.IOException;
 import java.net.URL;
@@ -90,6 +89,23 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
+    public Integer countProduct(ProductRequestParams productRequestParams) throws IOException {
+        String sql = readFile("sql/countProduct.sql");
+        Map<String, Object> map = new HashMap<>();
+        //查詢條件
+        if (null != productRequestParams.getProductCategory()) {
+            sql += " AND category=:category ";
+            map.put("category", productRequestParams.getProductCategory().name());
+        }
+        if (null != productRequestParams.getSearch()) {
+            sql += " AND product_name LIKE :search";
+            map.put("search", "%" + productRequestParams.getSearch() + "%");
+        }
+        return namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
+
+    }
+
+    @Override
     public List<Product> getProducts(ProductRequestParams productRequestParams) throws IOException {
         String sql = readFile("sql/getProducts.sql");
         Map<String, Object> map = new HashMap<>();
@@ -111,6 +127,7 @@ public class ProductDaoImpl implements ProductDao {
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
         return productList;
     }
+
 
     //
     //讀resources

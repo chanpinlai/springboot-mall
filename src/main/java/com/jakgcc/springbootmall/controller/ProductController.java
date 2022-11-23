@@ -5,6 +5,7 @@ import com.jakgcc.springbootmall.dto.ProductRequest;
 import com.jakgcc.springbootmall.dto.ProductRequestParams;
 import com.jakgcc.springbootmall.model.Product;
 import com.jakgcc.springbootmall.service.ProductService;
+import com.jakgcc.springbootmall.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping("/getProducts")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<Page> getProducts(
 //            查詢條件Filtering
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search,
@@ -46,9 +47,18 @@ public class ProductController {
         productRequestParams.setLimit(limit);
         productRequestParams.setOffset(offset);
 
+        Page page = new Page();
+        page.setLimit(limit);
+        page.setOffset(offset);
+
+        Integer total = productService.getCountProduct(productRequestParams);
+        page.setTotal(total);
+
+
 
         List<Product> productList = productService.getProducts(productRequestParams);
-        return ResponseEntity.status(HttpStatus.OK).body(productList);
+        page.setProductList(productList);
+        return ResponseEntity.status(HttpStatus.OK).body(page);
 
 
     }

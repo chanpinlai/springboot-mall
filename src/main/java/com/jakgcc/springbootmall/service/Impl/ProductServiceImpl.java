@@ -40,4 +40,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProducts(ProductRequestParams productRequestParams) throws IOException {
         return productDao.getProducts(productRequestParams);
     }
+
+    @Override
+    public Integer getCountProduct(ProductRequestParams productRequestParams) throws IOException {
+        return productDao.countProduct(productRequestParams);
+    }
 }

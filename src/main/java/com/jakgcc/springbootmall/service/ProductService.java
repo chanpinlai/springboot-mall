@@ -18,4 +18,6 @@ public interface ProductService {
     void deleteProductById(Integer productId) throws IOException;
 
     List<Product> getProducts(ProductRequestParams productRequestParams) throws IOException;
+
+    Integer getCountProduct(ProductRequestParams productRequestParams) throws IOException;
 }

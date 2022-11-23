@@ -17,4 +17,6 @@ public interface ProductDao {
     void deleteProductId(Integer productId) throws IOException;
 
     List<Product> getProducts(ProductRequestParams productRequestParams) throws IOException;
+
+    Integer countProduct(ProductRequestParams productRequestParams) throws IOException;
 }
