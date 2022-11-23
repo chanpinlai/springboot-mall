@@ -93,14 +93,7 @@ public class ProductDaoImpl implements ProductDao {
         String sql = readFile("sql/countProduct.sql");
         Map<String, Object> map = new HashMap<>();
         //查詢條件
-        if (null != productRequestParams.getProductCategory()) {
-            sql += " AND category=:category ";
-            map.put("category", productRequestParams.getProductCategory().name());
-        }
-        if (null != productRequestParams.getSearch()) {
-            sql += " AND product_name LIKE :search";
-            map.put("search", "%" + productRequestParams.getSearch() + "%");
-        }
+        sql = addFilteringSql(productRequestParams, sql, map);
         return namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
 
     }
@@ -110,14 +103,7 @@ public class ProductDaoImpl implements ProductDao {
         String sql = readFile("sql/getProducts.sql");
         Map<String, Object> map = new HashMap<>();
         //查詢條件
-        if (null != productRequestParams.getProductCategory()) {
-            sql += " AND category=:category ";
-            map.put("category", productRequestParams.getProductCategory().name());
-        }
-        if (null != productRequestParams.getSearch()) {
-            sql += " AND product_name LIKE :search";
-            map.put("search", "%" + productRequestParams.getSearch() + "%");
-        }
+        sql = addFilteringSql(productRequestParams, sql, map);
         //ORDER BY 用字串併接
         sql += " ORDER BY " + productRequestParams.getOrderBy() + " " + productRequestParams.getSort();
 //分頁
@@ -126,6 +112,18 @@ public class ProductDaoImpl implements ProductDao {
         map.put("offset", productRequestParams.getOffset());
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
         return productList;
+    }
+
+    private static String addFilteringSql(ProductRequestParams productRequestParams, String sql, Map<String, Object> map) {
+        if (null != productRequestParams.getProductCategory()) {
+            sql += " AND category=:category ";
+            map.put("category", productRequestParams.getProductCategory().name());
+        }
+        if (null != productRequestParams.getSearch()) {
+            sql += " AND product_name LIKE :search";
+            map.put("search", "%" + productRequestParams.getSearch() + "%");
+        }
+        return sql;
     }
 
 
