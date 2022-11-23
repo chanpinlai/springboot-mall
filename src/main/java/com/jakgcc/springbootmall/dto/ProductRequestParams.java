@@ -7,6 +7,27 @@ public class ProductRequestParams {
     String search;
     String orderBy;
     String sort;
+    Integer limit;
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public Integer getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+
+    Integer offset;
+
+
 
     public ProductCategory getProductCategory() {
         return productCategory;

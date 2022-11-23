@@ -93,7 +93,8 @@ public class ProductDaoImpl implements ProductDao {
     public List<Product> getProducts(ProductRequestParams productRequestParams) throws IOException {
         String sql = readFile("sql/getProducts.sql");
         Map<String, Object> map = new HashMap<>();
-        if (null != productRequestParams.getProductCategory().name()) {
+        //查詢條件
+        if (null != productRequestParams.getProductCategory()) {
             sql += " AND category=:category ";
             map.put("category", productRequestParams.getProductCategory().name());
         }
@@ -103,7 +104,10 @@ public class ProductDaoImpl implements ProductDao {
         }
         //ORDER BY 用字串併接
         sql += " ORDER BY " + productRequestParams.getOrderBy() + " " + productRequestParams.getSort();
-
+//分頁
+        sql += " LIMIT :limit OFFSET :offset ";
+        map.put("limit", productRequestParams.getLimit());
+        map.put("offset", productRequestParams.getOffset());
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
         return productList;
     }

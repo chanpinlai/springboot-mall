@@ -1,0 +1,1 @@
+SELECT * FROM mall.product LIMIT 2 OFFSET 0;

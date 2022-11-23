@@ -8,13 +8,19 @@ import com.jakgcc.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
@@ -22,15 +28,24 @@ public class ProductController {
 
     @GetMapping("/getProducts")
     public ResponseEntity<List<Product>> getProducts(
+//            查詢條件Filtering
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search,
+//            排序sorting
             @RequestParam(defaultValue = "created_date") String orderBy,
-            @RequestParam(defaultValue = "desc") String sort) throws IOException {
+            @RequestParam(defaultValue = "desc") String sort,
+//            分頁Pagination
+            @RequestParam(defaultValue = "5") @Min(0) @Max(1000) Integer limit,
+            @RequestParam(defaultValue = "0") @Min(0) Integer offset
+    ) throws IOException {
         ProductRequestParams productRequestParams = new ProductRequestParams();
         productRequestParams.setProductCategory(category);
         productRequestParams.setSearch(search);
         productRequestParams.setOrderBy(orderBy);
         productRequestParams.setSort(sort);
+        productRequestParams.setLimit(limit);
+        productRequestParams.setOffset(offset);
+
 
         List<Product> productList = productService.getProducts(productRequestParams);
         return ResponseEntity.status(HttpStatus.OK).body(productList);
