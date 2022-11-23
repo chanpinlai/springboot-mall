@@ -2,10 +2,11 @@ package com.jakgcc.springbootmall.dao.impl;
 
 import com.google.common.io.Resources;
 import com.jakgcc.springbootmall.dao.ProductDao;
-import com.jakgcc.springbootmall.dto.ProductRequest;
-import com.jakgcc.springbootmall.dto.ProductRequestParams;
+import com.jakgcc.springbootmall.rowmapper.dto.ProductRequest;
+import com.jakgcc.springbootmall.rowmapper.dto.ProductRequestParams;
 import com.jakgcc.springbootmall.model.Product;
 import com.jakgcc.springbootmall.rowmapper.ProductRowMapper;
+import com.jakgcc.springbootmall.util.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -28,7 +29,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product getProductById(Integer productId) throws IOException {
-        String sql = readFile("sql/getProductById.sql");
+        String sql = Tools.readFile("sql/getProductById.sql");
         Map<String, Object> map = new HashMap<>();
         map.put("productId", productId);
 
@@ -43,7 +44,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Integer createProduct(ProductRequest productRequest) throws IOException {
-        String sql = readFile("sql/createProduct.sql");
+        String sql = Tools.readFile("sql/createProduct.sql");
         Map<String, Object> map = new HashMap<>();
         map.put("productName", productRequest.getProductName());
         map.put("category", productRequest.getCategory().toString());
@@ -64,7 +65,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void updateProduct(Integer productId, ProductRequest productRequest) throws IOException {
-        String sql = readFile("sql/updateProductById.sql");
+        String sql = Tools.readFile("sql/updateProductById.sql");
         Map<String, Object> map = new HashMap<>();
         map.put("productId", productId);
         map.put("productName", productRequest.getProductName());
@@ -81,7 +82,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void deleteProductId(Integer productId) throws IOException {
-        String sql = readFile("sql/deleteProductId.sql");
+        String sql = Tools.readFile("sql/deleteProductId.sql");
         Map<String, Object> map = new HashMap<>();
         map.put("productId", productId);
         namedParameterJdbcTemplate.update(sql, map);
@@ -90,7 +91,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Integer countProduct(ProductRequestParams productRequestParams) throws IOException {
-        String sql = readFile("sql/countProduct.sql");
+        String sql = Tools.readFile("sql/countProduct.sql");
         Map<String, Object> map = new HashMap<>();
         //查詢條件
         sql = addFilteringSql(productRequestParams, sql, map);
@@ -100,7 +101,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public List<Product> getProducts(ProductRequestParams productRequestParams) throws IOException {
-        String sql = readFile("sql/getProducts.sql");
+        String sql = Tools.readFile("sql/getProducts.sql");
         Map<String, Object> map = new HashMap<>();
         //查詢條件
         sql = addFilteringSql(productRequestParams, sql, map);
@@ -127,12 +128,6 @@ public class ProductDaoImpl implements ProductDao {
     }
 
 
-    //
-    //讀resources
-    private String readFile(String relFilePath) throws IOException {
-        final URL url = Resources.getResource(relFilePath);
-        return Resources.toString(url, StandardCharsets.UTF_8);
-    }
 
 
 }

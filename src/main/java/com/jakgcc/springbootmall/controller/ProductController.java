@@ -1,9 +1,9 @@
 package com.jakgcc.springbootmall.controller;
 
 import com.jakgcc.springbootmall.constant.ProductCategory;
-import com.jakgcc.springbootmall.dto.ProductRequest;
-import com.jakgcc.springbootmall.dto.ProductRequestParams;
 import com.jakgcc.springbootmall.model.Product;
+import com.jakgcc.springbootmall.rowmapper.dto.ProductRequest;
+import com.jakgcc.springbootmall.rowmapper.dto.ProductRequestParams;
 import com.jakgcc.springbootmall.service.ProductService;
 import com.jakgcc.springbootmall.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.List;
 

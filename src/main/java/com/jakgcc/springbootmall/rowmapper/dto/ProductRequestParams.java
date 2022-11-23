@@ -1,4 +1,4 @@
-package com.jakgcc.springbootmall.dto;
+package com.jakgcc.springbootmall.rowmapper.dto;
 
 import com.jakgcc.springbootmall.constant.ProductCategory;
 
