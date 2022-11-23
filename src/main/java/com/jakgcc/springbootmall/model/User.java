@@ -1,10 +1,13 @@
 package com.jakgcc.springbootmall.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 
 public class User {
     private Integer userId;
     private String email;
+    @JsonInclude
     private String password;
     private Date createdDate;
     private Date lastModifiedDate;

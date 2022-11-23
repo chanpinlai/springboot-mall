@@ -50,4 +50,17 @@ public class UserDaoImpl implements UserDao {
             return null;
         }
     }
+
+    @Override
+    public User getUserByEmail(String email) throws IOException {
+        String sql = Tools.readFile("sql/getUserByEmail.sql");
+        Map<String,Object> map = new HashMap<>();
+        map.put("email",email);
+        List<User> userList = namedParameterJdbcTemplate.query(sql,map,new UserRowMapper());
+        if (userList.size() > 0) {
+            return userList.get(0);
+        } else {
+            return null;
+        }
+    }
 }
