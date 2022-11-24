@@ -2,6 +2,7 @@ package com.jakgcc.springbootmall.service.Impl;
 
 import com.jakgcc.springbootmall.dao.UserDao;
 import com.jakgcc.springbootmall.model.User;
+import com.jakgcc.springbootmall.rowmapper.dto.UserLoginRequest;
 import com.jakgcc.springbootmall.rowmapper.dto.UserRegisterRequest;
 import com.jakgcc.springbootmall.service.UserService;
 import org.slf4j.Logger;
@@ -32,5 +33,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Integer userId) throws IOException {
         return userDao.getUserById(userId);
+    }
+
+    @Override
+    public User login(UserLoginRequest userLoginRequest) throws IOException {
+        User user =userDao.getUserByEmail(userLoginRequest.getEmail());
+        if(null==user){
+            log.warn("email {} 未註冊",userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        if(user.getPassword().equals(userLoginRequest.getPassword())){
+            return user;
+        }else{
+            log.warn("密碼不正確{}",userLoginRequest.getPassword());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }

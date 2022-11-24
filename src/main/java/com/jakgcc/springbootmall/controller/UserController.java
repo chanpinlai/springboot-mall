@@ -1,6 +1,7 @@
 package com.jakgcc.springbootmall.controller;
 
 import com.jakgcc.springbootmall.model.User;
+import com.jakgcc.springbootmall.rowmapper.dto.UserLoginRequest;
 import com.jakgcc.springbootmall.rowmapper.dto.UserRegisterRequest;
 import com.jakgcc.springbootmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,10 @@ public class UserController {
         Integer userId = userService.register(userRegisterRequest);
         User user = userService.getUserById(userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
-
-
+    }
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest) throws IOException {
+        User user = userService.login(userLoginRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }
