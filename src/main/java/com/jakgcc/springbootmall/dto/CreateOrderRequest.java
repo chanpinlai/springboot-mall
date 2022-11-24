@@ -1,4 +1,4 @@
-package com.jakgcc.springbootmall.rowmapper.dto;
+package com.jakgcc.springbootmall.dto;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.List;

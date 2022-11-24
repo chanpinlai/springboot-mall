@@ -2,8 +2,8 @@ package com.jakgcc.springbootmall.service.Impl;
 
 import com.jakgcc.springbootmall.dao.UserDao;
 import com.jakgcc.springbootmall.model.User;
-import com.jakgcc.springbootmall.rowmapper.dto.UserLoginRequest;
-import com.jakgcc.springbootmall.rowmapper.dto.UserRegisterRequest;
+import com.jakgcc.springbootmall.dto.UserLoginRequest;
+import com.jakgcc.springbootmall.dto.UserRegisterRequest;
 import com.jakgcc.springbootmall.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -2,8 +2,8 @@ package com.jakgcc.springbootmall.controller;
 
 import com.jakgcc.springbootmall.constant.ProductCategory;
 import com.jakgcc.springbootmall.model.Product;
-import com.jakgcc.springbootmall.rowmapper.dto.ProductRequest;
-import com.jakgcc.springbootmall.rowmapper.dto.ProductRequestParams;
+import com.jakgcc.springbootmall.dto.ProductRequest;
+import com.jakgcc.springbootmall.dto.ProductRequestParams;
 import com.jakgcc.springbootmall.service.ProductService;
 import com.jakgcc.springbootmall.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;

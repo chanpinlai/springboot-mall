@@ -1,5 +1,6 @@
 package com.jakgcc.springbootmall.dao;
 
+import com.jakgcc.springbootmall.model.Order;
 import com.jakgcc.springbootmall.model.OrderItem;
 
 import java.io.IOException;
@@ -9,4 +10,8 @@ public interface OrderDao {
     Integer createOrder(Integer userId, int totalAmount) throws IOException;
 
     void createOrderItems(Integer orderId, List<OrderItem> orderItemList) throws IOException;
+
+    Order getOrderById(Integer orderId) throws IOException;
+
+    List<OrderItem> getOrderItemByOrderId(Integer orderId) throws IOException;
 }

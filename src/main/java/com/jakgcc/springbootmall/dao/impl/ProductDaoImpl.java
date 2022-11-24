@@ -1,9 +1,8 @@
 package com.jakgcc.springbootmall.dao.impl;
 
-import com.google.common.io.Resources;
 import com.jakgcc.springbootmall.dao.ProductDao;
-import com.jakgcc.springbootmall.rowmapper.dto.ProductRequest;
-import com.jakgcc.springbootmall.rowmapper.dto.ProductRequestParams;
+import com.jakgcc.springbootmall.dto.ProductRequest;
+import com.jakgcc.springbootmall.dto.ProductRequestParams;
 import com.jakgcc.springbootmall.model.Product;
 import com.jakgcc.springbootmall.rowmapper.ProductRowMapper;
 import com.jakgcc.springbootmall.util.Tools;
@@ -15,8 +14,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;

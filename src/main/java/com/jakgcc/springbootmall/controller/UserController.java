@@ -1,8 +1,8 @@
 package com.jakgcc.springbootmall.controller;
 
 import com.jakgcc.springbootmall.model.User;
-import com.jakgcc.springbootmall.rowmapper.dto.UserLoginRequest;
-import com.jakgcc.springbootmall.rowmapper.dto.UserRegisterRequest;
+import com.jakgcc.springbootmall.dto.UserLoginRequest;
+import com.jakgcc.springbootmall.dto.UserRegisterRequest;
 import com.jakgcc.springbootmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

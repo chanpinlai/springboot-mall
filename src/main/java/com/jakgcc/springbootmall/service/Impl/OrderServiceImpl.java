@@ -2,10 +2,11 @@ package com.jakgcc.springbootmall.service.Impl;
 
 import com.jakgcc.springbootmall.dao.OrderDao;
 import com.jakgcc.springbootmall.dao.ProductDao;
+import com.jakgcc.springbootmall.model.Order;
 import com.jakgcc.springbootmall.model.OrderItem;
 import com.jakgcc.springbootmall.model.Product;
-import com.jakgcc.springbootmall.rowmapper.dto.BuyItem;
-import com.jakgcc.springbootmall.rowmapper.dto.CreateOrderRequest;
+import com.jakgcc.springbootmall.dto.BuyItem;
+import com.jakgcc.springbootmall.dto.CreateOrderRequest;
 import com.jakgcc.springbootmall.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -44,5 +45,13 @@ public class OrderServiceImpl implements OrderService {
         Integer orderId = orderDao.createOrder(userId, totalAmount);
         orderDao.createOrderItems(orderId, orderItemList);
         return orderId;
+    }
+
+    @Override
+    public Order getOrderById(Integer orderId) throws IOException {
+        Order order = orderDao.getOrderById(orderId);
+        List<OrderItem> orderItemList = orderDao.getOrderItemByOrderId(orderId);
+        order.setOrderItemList(orderItemList);
+        return order;
     }
 }

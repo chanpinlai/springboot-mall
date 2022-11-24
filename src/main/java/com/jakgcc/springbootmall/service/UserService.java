@@ -1,8 +1,8 @@
 package com.jakgcc.springbootmall.service;
 
 import com.jakgcc.springbootmall.model.User;
-import com.jakgcc.springbootmall.rowmapper.dto.UserLoginRequest;
-import com.jakgcc.springbootmall.rowmapper.dto.UserRegisterRequest;
+import com.jakgcc.springbootmall.dto.UserLoginRequest;
+import com.jakgcc.springbootmall.dto.UserRegisterRequest;
 
 import java.io.IOException;
 

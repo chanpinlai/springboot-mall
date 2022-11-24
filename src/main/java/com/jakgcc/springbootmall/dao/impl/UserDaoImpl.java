@@ -3,7 +3,7 @@ package com.jakgcc.springbootmall.dao.impl;
 import com.jakgcc.springbootmall.dao.UserDao;
 import com.jakgcc.springbootmall.model.User;
 import com.jakgcc.springbootmall.rowmapper.UserRowMapper;
-import com.jakgcc.springbootmall.rowmapper.dto.UserRegisterRequest;
+import com.jakgcc.springbootmall.dto.UserRegisterRequest;
 import com.jakgcc.springbootmall.util.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
