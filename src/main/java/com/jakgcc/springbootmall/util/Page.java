@@ -1,5 +1,6 @@
 package com.jakgcc.springbootmall.util;
 
+import com.jakgcc.springbootmall.model.Order;
 import com.jakgcc.springbootmall.model.Product;
 
 import java.util.List;
@@ -9,6 +10,15 @@ public class Page<T> {
     Integer offset;
     Integer total;
     List<Product> productList;
+    List<Order> result;
+
+    public List<Order> getResult() {
+        return result;
+    }
+
+    public void setResult(List<Order> result) {
+        this.result = result;
+    }
 
     public Integer getLimit() {
         return limit;

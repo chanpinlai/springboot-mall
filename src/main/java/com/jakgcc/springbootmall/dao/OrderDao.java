@@ -1,5 +1,6 @@
 package com.jakgcc.springbootmall.dao;
 
+import com.jakgcc.springbootmall.dto.OrderRequestParams;
 import com.jakgcc.springbootmall.model.Order;
 import com.jakgcc.springbootmall.model.OrderItem;
 
@@ -14,4 +15,8 @@ public interface OrderDao {
     Order getOrderById(Integer orderId) throws IOException;
 
     List<OrderItem> getOrderItemByOrderId(Integer orderId) throws IOException;
+
+    List<Order> getOrders(OrderRequestParams orderRequestParams) throws IOException;
+
+    Integer countOrder(OrderRequestParams orderRequestParams) throws IOException;
 }

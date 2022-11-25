@@ -1,0 +1,1 @@
+SELECT count(*) FROM mall.`order` WHERE 1=1

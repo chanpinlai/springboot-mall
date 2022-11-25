@@ -1,6 +1,8 @@
 package com.jakgcc.springbootmall.dao.impl;
 
 import com.jakgcc.springbootmall.dao.OrderDao;
+import com.jakgcc.springbootmall.dto.OrderRequestParams;
+import com.jakgcc.springbootmall.dto.ProductRequestParams;
 import com.jakgcc.springbootmall.model.Order;
 import com.jakgcc.springbootmall.model.OrderItem;
 import com.jakgcc.springbootmall.rowmapper.OrderItemRowMapper;
@@ -82,5 +84,40 @@ public class OrderDaoImpl implements OrderDao {
         map.put("order_id", orderId);
         List<OrderItem> orderItemList = namedParameterJdbcTemplate.query(sql, map, new OrderItemRowMapper());
         return orderItemList;
+    }
+
+    @Override
+    public List<Order> getOrders(OrderRequestParams orderRequestParams) throws IOException {
+        String sql = Tools.readFile("sql/getOrders.sql");
+        Map<String, Object> map = new HashMap<>();
+        //查詢條件
+        sql = addFilteringSql(orderRequestParams, sql, map);
+        //排序
+        sql += " ORDER BY created_date DESC ";
+        //分頁
+        sql += " LIMIT :limit OFFSET :offset ";
+        map.put("limit",orderRequestParams.getLimit());
+        map.put("offset",orderRequestParams.getOffset());
+
+        List<Order> orderList = namedParameterJdbcTemplate.query(sql,map,new OrderRowMapper());
+        return orderList;
+    }
+
+    @Override
+    public Integer countOrder(OrderRequestParams orderRequestParams) throws IOException {
+        String sql = Tools.readFile("sql/countOrder.sql");
+        Map<String, Object> map = new HashMap<>();
+        //查詢條件
+        sql = addFilteringSql(orderRequestParams, sql, map);
+        Integer count = namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
+        return count;
+    }
+
+    private static String addFilteringSql(OrderRequestParams orderRequestParams, String sql, Map<String, Object> map) {
+        if(null!=orderRequestParams.getUserId()){
+            sql+=" AND user_id = :user_id ";
+            map.put("user_id",orderRequestParams.getUserId());
+        }
+        return sql;
     }
 }
