@@ -124,7 +124,13 @@ public class ProductDaoImpl implements ProductDao {
         return sql;
     }
 
-
-
-
+    @Override
+    public void updateStock(Integer productId, Integer stock) throws IOException {
+        String sql = Tools.readFile("sql/updateStock.sql");
+        Map<String,Object> map = new HashMap<>();
+        map.put("stock",stock);
+        map.put("last_modified_date",new Date());
+        map.put("product_id",productId);
+        namedParameterJdbcTemplate.update(sql,map);
+    }
 }
